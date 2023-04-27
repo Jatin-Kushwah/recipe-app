@@ -1,19 +1,20 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { error, success } = require("../Utils/responseWrap");
 
 const signup = async (req, res) => {
     try {
         const { username, password } = req.body;
 
         if (!username || !password) {
-            return res.status(400).send("Username and Password are required.");
+            return res.send(error(400, "Username and Password are required."));
         }
 
         const oldUser = await User.findOne({ username });
 
         if (oldUser) {
-            return res.status(409).send("User already exists.");
+            return res.send(error(409, "User already exists."));
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -23,7 +24,7 @@ const signup = async (req, res) => {
             password: hashedPassword,
         });
 
-        res.status(201).json("User registered successfully.");
+        return res.send(success(201, "User registered successfully."));
     } catch (error) {
         console.log(error);
     }
@@ -34,19 +35,19 @@ const login = async (req, res) => {
         const { username, password } = req.body;
 
         if (!username || !password) {
-            return res.status(400).send("Username and Password are required.");
+            return res.send(error(400, "Username and Password are required."));
         }
 
         const user = await User.findOne({ username });
 
         if (!user) {
-            return res.status(409).send("User does not exist.");
+            return res.send(error(409, "User does not exist."));
         }
 
         const validPassword = await bcrypt.compare(password, user.password);
 
         if (!validPassword) {
-            return res.status(403).send("Username or Password is incorrect");
+            return res.send(error(403, "Username or Password is incorrect"));
         }
 
         const accessToken = generateAccessToken({
@@ -61,9 +62,10 @@ const login = async (req, res) => {
             secure: true,
         });
 
-        return res.json({ accessToken });
-    } catch (error) {
-        console.log(error);
+        return res.send(success(200, { accessToken }));
+    } catch (err) {
+        console.log(err);
+        return res.send(error(500, err.message));
     }
 };
 
@@ -71,7 +73,7 @@ const refreshAccessToken = async (req, res) => {
     const cookies = req.cookies.jwt;
 
     if (!cookies) {
-        return res.status(401).send("Refresh token in cookie is required");
+        return res.send(error(401, "Refresh token in cookie is required"));
     }
 
     const refreshToken = cookies;
@@ -85,7 +87,7 @@ const refreshAccessToken = async (req, res) => {
         return res.status(201).json({ accessToken });
     } catch (err) {
         console.log(err);
-        return res.status(401).send("Invalid refresh token");
+        return res.send(error(401, "Invalid refresh token"));
     }
 };
 
@@ -97,6 +99,7 @@ const logoutController = async (req, res) => {
         });
         return res.send(success(200, "user logged out"));
     } catch (e) {
+        console.log(e);
         return res.send(error(500, e.message));
     }
 };

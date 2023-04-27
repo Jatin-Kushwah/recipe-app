@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const { error } = require("../Utils/responseWrap");
 
 module.exports = async (req, res, next) => {
     if (
@@ -7,7 +8,7 @@ module.exports = async (req, res, next) => {
         !req.headers.authorization ||
         !req.headers.authorization.startsWith("Bearer")
     ) {
-        return res.status(401).send("Authorization header is required");
+        return res.send(error(401, "Authorization header is required"));
     }
 
     const accessToken = req.headers.authorization.split(" ")[1];
@@ -19,12 +20,12 @@ module.exports = async (req, res, next) => {
         const user = await User.findById(req._id);
 
         if (!user) {
-            return res.status(404).send("User not found!");
+            return res.send(error(404, "User not found!"));
         }
 
         next();
     } catch (err) {
         console.log(err);
-        return res.status(401).send("Invalid access key");
+        return res.send(error(401, "Invalid access key"));
     }
 };
