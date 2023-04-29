@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const recipeSchema = mongoose.Schema({
     name: {
         type: String,
@@ -28,7 +30,7 @@ const recipeSchema = mongoose.Schema({
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "user",
         required: true,
     },
     category: {
@@ -37,4 +39,4 @@ const recipeSchema = mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("Recipe", recipeSchema);
+module.exports = mongoose.model("recipe", recipeSchema);
