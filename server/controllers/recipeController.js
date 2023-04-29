@@ -7,6 +7,7 @@ const createRecipeController = async (req, res) => {
     try {
         const {
             name,
+            cuisine,
             ingredients,
             steps,
             image,
@@ -17,6 +18,7 @@ const createRecipeController = async (req, res) => {
 
         if (
             !name ||
+            !cuisine ||
             !ingredients ||
             !steps ||
             !image ||
@@ -37,6 +39,7 @@ const createRecipeController = async (req, res) => {
 
         const recipe = await Recipe.create({
             name,
+            cuisine,
             ingredients,
             steps,
             image: {
@@ -63,6 +66,7 @@ const editRecipeController = async (req, res) => {
         const {
             recipeId,
             name,
+            cuisine,
             ingredients,
             steps,
             image,
@@ -73,6 +77,7 @@ const editRecipeController = async (req, res) => {
 
         if (
             !name ||
+            !cuisine ||
             !ingredients ||
             !steps ||
             !image ||
@@ -95,6 +100,7 @@ const editRecipeController = async (req, res) => {
         });
 
         recipe.name = name;
+        recipe.cuisine = cuisine;
         recipe.ingredients = ingredients;
         recipe.steps = steps;
         recipe.videoUrl = videoUrl;
@@ -113,7 +119,49 @@ const editRecipeController = async (req, res) => {
     }
 };
 
+const getAllRecipe = async (req, res) => {
+    try {
+        const recipes = await Recipe.find().lean();
+
+        return res.send(success(200, recipes));
+    } catch (err) {
+        return res.send(error(500, err.message));
+    }
+};
+
+const deleteRecipeController = async (req, res) => {
+    try {
+        // const recipeId = req.params.id;
+        const { recipeId } = req.body;
+        const userId = req._id;
+
+        const recipe = await Recipe.findById(recipeId);
+        if (!recipe) {
+            return res.send(error(404, "Recipe not found"));
+        }
+
+        // Check if the user is authorized to delete the recipe
+        if (recipe.owner.toString() !== userId) {
+            return res.send(error(401, "Unauthorized"));
+        }
+
+        // Delete the recipe from the Recipe collection
+        await recipe.deleteOne();
+
+        // Delete the recipe from the User collection
+        const user = await User.findById(userId);
+        user.recipes.pull(recipeId);
+        await user.save();
+
+        return res.send(success(200, "Recipe deleted successfully"));
+    } catch (err) {
+        return res.send(error(500, err.message));
+    }
+};
+
 module.exports = {
     createRecipeController,
     editRecipeController,
+    getAllRecipe,
+    deleteRecipeController,
 };
