@@ -40,7 +40,7 @@ app.use(
 );
 
 app.use("/auth", authRouter);
-app.use("/recipe", recipeRouter);
+app.use("/admin", recipeRouter);
 
 app.get("/", (req, res) => {
     res.status(200).send("Ok from server");

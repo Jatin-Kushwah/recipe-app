@@ -87,7 +87,7 @@ const editRecipeController = async (req, res) => {
             return res.send(error(400, "All fields are required"));
         }
 
-        // const recipeId = req.params.id;
+        // const { recipeId } = req.params;
         const recipe = await Recipe.findById(recipeId);
 
         if (!recipe) {
@@ -129,6 +129,22 @@ const getAllRecipe = async (req, res) => {
     }
 };
 
+const getOneRecipeController = async (req, res) => {
+    try {
+        const { recipeId } = req.params;
+
+        const recipe = await Recipe.findById(recipeId);
+
+        if (!recipe) {
+            return res.send(error(404, "Recipe not found"));
+        }
+
+        return res.send(success(200, recipe));
+    } catch (err) {
+        return res.send(error(500, err.message));
+    }
+};
+
 const deleteRecipeController = async (req, res) => {
     try {
         // const recipeId = req.params.id;
@@ -164,4 +180,5 @@ module.exports = {
     editRecipeController,
     getAllRecipe,
     deleteRecipeController,
+    getOneRecipeController,
 };

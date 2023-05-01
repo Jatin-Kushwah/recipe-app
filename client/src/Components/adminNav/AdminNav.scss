@@ -1,0 +1,43 @@
+.AdminNav {
+    display: flex;
+    width: 85vw;
+    margin-top: 2rem;
+    border-radius: 1rem;
+    margin-inline: auto;
+    padding: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 1px 2px 6px #d1d1d1;
+
+    .heading {
+        cursor: pointer;
+    }
+
+    .navbar-buttons {
+        display: flex;
+        gap: 4rem;
+
+        .btn-create {
+            background-color: #0081cf;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.6rem;
+            padding-inline: 0.8rem;
+            font-weight: 600;
+            font-size: 12px;
+            border-radius: 0.5rem;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #0264a1;
+            }
+        }
+
+        .btn-logout {
+            font-size: 1.4rem;
+            background: none;
+            cursor: pointer;
+        }
+    }
+}
