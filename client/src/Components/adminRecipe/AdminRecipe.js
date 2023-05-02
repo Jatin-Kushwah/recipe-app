@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./AdminRecipe.scss";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
-import { getRecipeData } from "../../redux/slices/recipeSlice";
+import { deleteRecipe, getRecipeData } from "../../redux/slices/recipeSlice";
 import { useNavigate } from "react-router-dom";
 
 function AdminRecipe() {
@@ -15,7 +15,18 @@ function AdminRecipe() {
         dispatch(getRecipeData());
     }, [dispatch]);
 
-    // console.log(recipeData);
+    const handleDelete = async (recipeId) => {
+        try {
+            if (
+                window.confirm("Are you sure you want to delete this recipe?")
+            ) {
+                await dispatch(deleteRecipe(recipeId));
+                dispatch(getRecipeData());
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className="AdminRecipe">
@@ -32,7 +43,10 @@ function AdminRecipe() {
                         >
                             Edit
                         </button>
-                        <button className="delete-btn">
+                        <button
+                            onClick={() => handleDelete(recipe._id)}
+                            className="delete-btn"
+                        >
                             <MdDeleteForever />
                         </button>
                     </div>

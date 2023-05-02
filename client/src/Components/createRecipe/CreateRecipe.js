@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "./CreateRecipe.scss";
 import { axiosClient } from "../../Utils/axiosClient";
+import { useNavigate } from "react-router-dom";
 
 const CreateRecipe = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: "",
         cuisine: "",
@@ -73,10 +76,10 @@ const CreateRecipe = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axiosClient.post("/admin/create", {
+            const response = await axiosClient.post("/admin", {
                 ...formData,
             });
-            console.log(response.data);
+            navigate("/admin");
         } catch (error) {
             console.log(error);
         }

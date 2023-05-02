@@ -21,8 +21,6 @@ const EditRecipe = () => {
 
     const recipe = useSelector((state) => state.recipeReducer.oneRecipe);
 
-    console.log(recipe);
-
     useEffect(() => {
         dispatch(getOneRecipe(`${params.recipeId}`));
     }, [params.recipeId, dispatch]);

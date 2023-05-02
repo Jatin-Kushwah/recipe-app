@@ -25,6 +25,18 @@ export const updateRecipe = createAsyncThunk(
     }
 );
 
+export const deleteRecipe = createAsyncThunk(
+    "admin/deleteRecipe",
+    async (recipeId) => {
+        try {
+            const response = await axiosClient.delete(`/admin/${recipeId}`);
+            return response.result;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+);
+
 export const getOneRecipe = createAsyncThunk(
     "admin/getOneRecipe",
     async (recipeId) => {
@@ -55,6 +67,11 @@ const recipeSlice = createSlice({
             })
             .addCase(updateRecipe.fulfilled, (state, action) => {
                 state.oneRecipe = action.payload;
+            })
+            .addCase(deleteRecipe.fulfilled, (state, action) => {
+                state.recipeData = state.recipeData.filter(
+                    (recipe) => recipe.id !== action.payload
+                );
             });
     },
 });

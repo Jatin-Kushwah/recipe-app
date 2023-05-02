@@ -147,8 +147,7 @@ const getOneRecipeController = async (req, res) => {
 
 const deleteRecipeController = async (req, res) => {
     try {
-        // const recipeId = req.params.id;
-        const { recipeId } = req.body;
+        const { recipeId } = req.params;
         const userId = req._id;
 
         const recipe = await Recipe.findById(recipeId);

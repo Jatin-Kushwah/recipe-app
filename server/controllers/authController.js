@@ -91,7 +91,7 @@ const refreshAccessToken = async (req, res) => {
     }
 };
 
-const logoutController = async (req, res) => {
+const logout = async (req, res) => {
     try {
         res.clearCookie("jwt", {
             httpOnly: true,
@@ -108,7 +108,7 @@ const logoutController = async (req, res) => {
 const generateAccessToken = (data) => {
     try {
         const token = jwt.sign(data, process.env.ACCESS_TOKEN_KEY, {
-            expiresIn: "1d",
+            expiresIn: "30d",
         });
         return token;
     } catch (err) {
@@ -131,4 +131,5 @@ module.exports = {
     signup,
     login,
     refreshAccessToken,
+    logout,
 };
