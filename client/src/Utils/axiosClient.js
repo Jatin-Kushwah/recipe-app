@@ -6,10 +6,8 @@ import {
     setItem,
 } from "./localStorageManager";
 
-let baseURL = "http://localhost:4000/";
-
 export const axiosClient = axios.create({
-    baseURL,
+    baseURL: process.env.REACT_APP_SERVER_BASE_URL || "http://localhost:4000",
     withCredentials: true,
 });
 

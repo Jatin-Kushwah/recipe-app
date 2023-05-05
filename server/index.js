@@ -35,7 +35,7 @@ let origin = "http://localhost:3000";
 app.use(
     cors({
         credentials: true,
-        origin,
+        origin: process.env.CORS_ORIGIN || "http://localhost:3000",
     })
 );
 
