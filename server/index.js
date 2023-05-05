@@ -30,8 +30,6 @@ app.use(express.json());
 app.use(morgan("common"));
 app.use(cookieParser());
 
-let origin = "http://localhost:3000";
-
 app.use(
     cors({
         credentials: true,

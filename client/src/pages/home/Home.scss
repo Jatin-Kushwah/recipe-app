@@ -46,6 +46,18 @@
         overflow: auto;
         gap: 2rem;
 
+        @media screen and (max-width: 1115px) {
+            grid-template-columns: repeat(3, minmax(250px, 1fr));
+        }
+
+        @media screen and (max-width: 822px) {
+            grid-template-columns: repeat(2, minmax(250px, 1fr));
+        }
+
+        @media screen and (max-width: 542px) {
+            grid-template-columns: repeat(1, minmax(250px, 1fr));
+        }
+
         .recipe {
             display: flex;
             flex-direction: column;

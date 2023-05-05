@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": " nodemon index.js",
+        "start": "cross-env CORS_ORIGIN=http://localhost:3000 nodemon index",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
@@ -20,5 +20,8 @@
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^7.0.4",
         "morgan": "^1.10.0"
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3"
     }
 }

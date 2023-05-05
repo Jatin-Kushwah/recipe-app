@@ -14,9 +14,9 @@ function RecipeBox({ closeRecipeBox, recipe }) {
                         height="50%"
                         src={recipe.videoUrl}
                         title="YouTube video player"
-                        frameborder="0"
+                        frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
+                        allowFullScreen
                     ></iframe>
                 </div>
 
