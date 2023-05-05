@@ -10,6 +10,7 @@ router.delete(
     recipeController.deleteRecipeController
 );
 router.get("/", recipeController.getAllRecipe);
+router.get("/adminRecipes", requireUser, recipeController.getAllAdminRecipe);
 router.get(
     "/getRecipe/:recipeId",
     requireUser,

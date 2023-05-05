@@ -129,6 +129,18 @@ const getAllRecipe = async (req, res) => {
     }
 };
 
+const getAllAdminRecipe = async (req, res) => {
+    try {
+        const owner = req._id;
+
+        const recipes = await Recipe.find({ owner }).lean();
+
+        return res.send(success(200, recipes));
+    } catch (err) {
+        return res.send(error(500, err.message));
+    }
+};
+
 const getOneRecipeController = async (req, res) => {
     try {
         const { recipeId } = req.params;
@@ -180,4 +192,5 @@ module.exports = {
     getAllRecipe,
     deleteRecipeController,
     getOneRecipeController,
+    getAllAdminRecipe,
 };

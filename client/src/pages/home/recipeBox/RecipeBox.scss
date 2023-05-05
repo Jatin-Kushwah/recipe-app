@@ -1,0 +1,137 @@
+.RecipeBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .blank {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+        background-color: white;
+        width: 80vw;
+        height: 90vh;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        align-items: center;
+        z-index: 1;
+        border-radius: 12px;
+
+        .left {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            height: 100%;
+            flex-direction: column;
+
+            img {
+                width: 80%;
+                border-radius: 1rem;
+            }
+
+            iframe {
+                border-radius: 1rem;
+            }
+        }
+
+        .right {
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            height: 100%;
+            overflow-y: auto;
+
+            .heading {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                .name {
+                    font-family: "Source Serif Pro";
+                }
+
+                .cuisine {
+                    text-transform: capitalize;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .time {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+            }
+
+            .instruction {
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+
+                .head {
+                    font-size: 1rem;
+                    font-family: cursive;
+                }
+
+                .steps {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+
+                    li {
+                        list-style: none;
+                        font-size: 0.9rem;
+                        font-family: monospace;
+
+                        &::before {
+                            content: "•";
+                            font-size: 115%;
+                            padding-right: 5px;
+                        }
+                    }
+                }
+            }
+
+            .ingredients {
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+
+                .head {
+                    font-size: 1.1rem;
+                    font-family: "Dancing Script";
+                }
+
+                .list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+
+                    li {
+                        list-style: none;
+                        font-family: math;
+
+                        &::before {
+                            content: "•";
+                            font-size: 115%;
+                            padding-right: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

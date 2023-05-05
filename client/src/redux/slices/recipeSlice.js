@@ -13,6 +13,18 @@ export const getRecipeData = createAsyncThunk(
     }
 );
 
+export const getAdminRecipeData = createAsyncThunk(
+    "admin/getAdminRecipeData",
+    async () => {
+        try {
+            const response = await axiosClient.get("/admin/adminRecipes");
+            return response.result;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+);
+
 export const updateRecipe = createAsyncThunk(
     "admin/updateRecipe",
     async (body) => {
@@ -54,6 +66,7 @@ export const getOneRecipe = createAsyncThunk(
 const recipeSlice = createSlice({
     name: "recipeSlice",
     initialState: {
+        adminRecipeData: [],
         recipeData: [],
         oneRecipe: null,
     },
@@ -61,6 +74,9 @@ const recipeSlice = createSlice({
         builder
             .addCase(getRecipeData.fulfilled, (state, action) => {
                 state.recipeData = action.payload;
+            })
+            .addCase(getAdminRecipeData.fulfilled, (state, action) => {
+                state.adminRecipeData = action.payload;
             })
             .addCase(getOneRecipe.fulfilled, (state, action) => {
                 state.oneRecipe = action.payload;

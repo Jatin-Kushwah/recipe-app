@@ -6,6 +6,8 @@ import CreateRecipe from "./Components/createRecipe/CreateRecipe.js";
 import EditRecipe from "./Components/editRecipe/EditRecipe.js";
 import RequireUser from "./Components/requireUser";
 import AdminRecipe from "./Components/adminRecipe/AdminRecipe";
+import Home from "./pages/home/Home";
+import RequireIfNoLogin from "./Components/requireIfNoLogin";
 
 function App() {
     return (
@@ -18,8 +20,13 @@ function App() {
                         <Route path="edit/:recipeId" element={<EditRecipe />} />
                     </Route>
                 </Route>
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+
+                <Route path="/" element={<Home />} />
+
+                <Route element={<RequireIfNoLogin />}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                </Route>
             </Routes>
         </div>
     );

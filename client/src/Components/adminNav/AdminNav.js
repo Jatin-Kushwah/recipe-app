@@ -4,6 +4,8 @@ import { FaWalking } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { KEY_ACCESS_TOKEN, removeItem } from "../../Utils/localStorageManager";
 import { axiosClient } from "../../Utils/axiosClient";
+import { GiCook } from "react-icons/gi";
+import { IoCreateSharp } from "react-icons/io5";
 
 function AdminNav() {
     const navigate = useNavigate();
@@ -20,15 +22,20 @@ function AdminNav() {
 
     return (
         <nav className="AdminNav">
-            <h2 className="heading" onClick={() => navigate("/admin")}>
-                Recipes
-            </h2>
+            <div className="logo">
+                <span onClick={() => navigate("/")}>
+                    <GiCook />
+                </span>
+                <h2 className="heading" onClick={() => navigate("/admin")}>
+                    Recipes
+                </h2>
+            </div>
             <div className="navbar-buttons">
                 <button
                     className="btn-create"
                     onClick={() => navigate("/admin/create")}
                 >
-                    Create
+                    <span>Create</span> <IoCreateSharp />
                 </button>
                 <button onClick={() => handleLogout()} className="btn-logout">
                     <FaWalking />
